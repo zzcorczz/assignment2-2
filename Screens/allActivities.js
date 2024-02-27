@@ -11,12 +11,17 @@ import { Styles } from '../Components/Styles';
 import Activity from '../Components/Activity';
 import { useContextHook } from '../Components/ActivitiesList';
 import { FontAwesome } from '@expo/vector-icons';
+import { database } from '../firebase-files/firebaseSetup';
 
 export default function AllActivities( {navigation} ) {
 
   function addHandler() {
-    navigation.navigate('Add')
+    navigation.navigate('Add');
   }
+
+
+
+  //console.log(database);
 
   useEffect(() => navigation.setOptions(
     {

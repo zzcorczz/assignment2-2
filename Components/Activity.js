@@ -23,7 +23,6 @@ export default function Activity( props ) {
     }
   }
 
-
   let component;
 
   if (judgeSpecial() === true) {
