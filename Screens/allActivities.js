@@ -23,8 +23,16 @@ export default function AllActivities( {navigation} ) {
     navigation.navigate('Add');
   }
 
-  function navigationHelper() {
-    navigation.navigate('Add');
+  function navigationHelper(activity, duration, date, importance, id) {
+    //console.log(activity);
+    data = {
+      activity: activity,
+      duration: duration,
+      date: date,
+      importance: importance,
+      id:id,
+    };
+    navigation.navigate('Edit', data);
   }
 
 
@@ -91,6 +99,7 @@ export default function AllActivities( {navigation} ) {
                   date = {item.date}
                   duration = {item.time}
                   id = {item.id}
+                  importance = {item.importance}
                   navigationHelper = {navigationHelper}
                 />
               )

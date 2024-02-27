@@ -21,6 +21,7 @@ import SpecialActivities from './Screens/SpecialActivities';
 import ContextProvider from './Components/ActivitiesList';
 import AddAnActivity from './Screens/AddAnActivity';
 import { FontAwesome } from '@expo/vector-icons';
+import Edit from './Screens/Edit';
 
 
 
@@ -114,6 +115,11 @@ export default function App() {
             options={Styles.addScreen}
             name='Add'
             component={AddAnActivity}
+          />
+          <stack.Screen
+            options={Styles.addScreen}
+            name='Edit'
+            component={Edit}
           />
         </stack.Navigator>
       </ContextProvider>

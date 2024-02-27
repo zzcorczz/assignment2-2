@@ -23,13 +23,19 @@ export default function Activity( props ) {
     }
   }
 
+  
+  function helper() {
+    //console.log(props.activity);
+    props.navigationHelper(props.activity, props.duration, props.date, props.importance, props.id);
+  };
+
   let component;
 
   if (judgeSpecial() === true) {
     
     component = (
 
-      <Pressable onPress={props.navigationHelper}>
+      <Pressable onPress={helper}>
         <View style={Styles.activityView}>
             <Text style={Styles.activityText}> {props.activity} </Text>
             <FontAwesome name="exclamation-triangle" size={20} color="orange" style={Styles.image}/>
@@ -47,7 +53,7 @@ export default function Activity( props ) {
   else if (judgeSpecial() === false) {
     
     component =  (
-      <Pressable onPress={props.navigationHelper}>
+      <Pressable onPress={helper}>
         <View style={Styles.activityView}>
           <Text style={Styles.activityText}> {props.activity} </Text>
           <View style={Styles.dateView2}>
