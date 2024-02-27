@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 import {apiKey, authDomain, projectId, storageBucket, messagingSenderId, appId} from '@env';
 
 // TODO: Replace the following with your app's Firebase project configuration
@@ -11,8 +11,10 @@ const firebaseConfig = {
     projectId: projectId,
     storageBucket: storageBucket,
     messagingSenderId: messagingSenderId,
-    appId: appId
+    appId: appId,
 };
+
+console.log(firebaseConfig);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -20,5 +22,6 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Cloud Firestore and get a reference to the service
 export const database = getFirestore(app);
+
 
 

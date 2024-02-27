@@ -14,11 +14,16 @@ import { Styles } from '../Components/Styles';
 import TextBox from '../Components/TextBox';
 import DatePicker from '../Components/DatePicker';
 import { useUpdateHook, useContextHook } from '../Components/ActivitiesList';
+import { writeToDB } from '../firebase-files/firebaseHelper';
+import { database } from '../firebase-files/firebaseSetup';
+import { addDoc, collection } from 'firebase/firestore';
+
 
 
 export default function AddAnActivity( { navigation, route } ) {
 
   updateArray = useUpdateHook();  
+  
 
   const [open, setOpen] = useState(false);
   const [duration, setDuration] = useState('')
@@ -47,7 +52,16 @@ export default function AddAnActivity( { navigation, route } ) {
 
   function confirmHandler() {
     
+    
     if (isNaN(parseInt(duration)) === false && parseInt(duration) > 0 && text !== '' && value !== undefined) {
+
+      data = {
+        date: text,
+        time: parseInt(duration),
+        activity: value
+      }
+
+      /*
       updateArray(
         {
           date: text,
@@ -55,9 +69,14 @@ export default function AddAnActivity( { navigation, route } ) {
           activity: value
         } 
       )
+      */
       navigation.goBack();
-    }
 
+      writeToDB(data);
+
+      console.log('nmsl');
+    }
+    
     else {
       alert(
         'Wrong Input!'

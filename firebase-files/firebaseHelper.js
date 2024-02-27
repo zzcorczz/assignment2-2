@@ -1,11 +1,15 @@
-import {collection, addDoc} from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import { database } from './firebaseSetup';
 
 export async function writeToDB(data) {
   try {
-    addDoc(collection(database, 'activities'), data);
+    console.log(typeof data);
+    //console.log('triggered');
+    //console.log(database);
+    const docRef = await addDoc(collection(database, "activities"), data);
+    console.log(docRef);
   } catch (err) {
-    console.log(err);
+    console.log('There is an error: ', err);
   }
 }
 

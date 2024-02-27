@@ -7,20 +7,36 @@ Purpose:
 
 
 import { View, Text, Button, FlatList } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Styles } from '../Components/Styles'
 import Activity from '../Components/Activity'
 import { useContextHook } from '../Components/ActivitiesList'
+import { collection, onSnapshot } from 'firebase/firestore'
+import { database } from '../firebase-files/firebaseSetup'
 
 export default function SpecialActivities({navigation}) {
   
+  const [activities, setActivities] = useState([]);
+
+  useEffect(() => {
+    onSnapshot(collection(database, 'activities'), (QuerySnapshot) => {
+        let array = [];
+        QuerySnapshot.forEach((doc) => {
+          array.push({...doc.data(), id: doc.id});
+        });
+        const newArray = array.filter(judgeSpecial);
+        setActivities(newArray);
+      })
+      
+  }, []);
+
   function addHandler() {
     navigation.navigate('Add')
   }
   
   function judgeSpecial(obj) {
     
-    if ((obj.data.activity === 'Running' || obj.data.activity === 'Weights') && obj.data.time >= 60)
+    if ((obj.activity === 'Running' || obj.activity === 'Weights') && obj.time >= 60)
     {
       return true;
     }
@@ -60,22 +76,20 @@ export default function SpecialActivities({navigation}) {
     )
   }
 
-  array = useContextHook();
-
-  const newArray = array.filter(judgeSpecial);
+  //const newArray = array.filter(judgeSpecial);
 
   return (
     <View style={Styles.container}>
       <View style={Styles.flatListView}>
         <FlatList
-          data={newArray}
+          data={activities}
           renderItem={
             ({item}) => {
               return (
                 <Activity
-                  activity = {item.data.activity}
-                  date = {item.data.date}
-                  duration = {item.data.time}
+                  activity = {item.activity}
+                  date = {item.date}
+                  duration = {item.time}
                   id = {item.id}
                 />
               )
