@@ -1,3 +1,11 @@
+/*
+File name:
+  PressableComponent.js
+Purpose:
+  This file is the custom component of pressable.
+*/
+
+
 import { View, Text, Pressable } from 'react-native'
 import React, { Children } from 'react'
 import { Styles } from './Styles'

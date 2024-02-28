@@ -1,3 +1,12 @@
+/*
+File name:
+  firebaseSetup.js
+Purpose:
+  This file helps users to establish connection to a
+  Google Firebase instance.
+*/
+
+
 import { initializeApp } from "firebase/app";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import {apiKey, authDomain, projectId, storageBucket, messagingSenderId, appId} from '@env';
