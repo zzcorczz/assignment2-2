@@ -10,6 +10,7 @@ import { View, Text, Pressable } from 'react-native'
 import React from 'react'
 import { Styles } from './Styles'
 import { FontAwesome } from '@expo/vector-icons';
+import PressableComponent from './PressableComponent';
 
 export default function Activity( props ) {
 
@@ -35,7 +36,7 @@ export default function Activity( props ) {
     
     component = (
 
-      <Pressable onPress={helper}>
+      <PressableComponent onPressFunction={helper}>
         <View style={Styles.activityView}>
             <Text style={Styles.activityText}> {props.activity} </Text>
             <FontAwesome name="exclamation-triangle" size={20} color="orange" style={Styles.image}/>
@@ -46,14 +47,14 @@ export default function Activity( props ) {
               <Text style = {Styles.durationAndDateText}>{props.duration + 'mins'}</Text>
             </View>
         </View>
-      </Pressable>
+      </PressableComponent>
     )
   }
 
   else if (judgeSpecial() === false) {
     
     component =  (
-      <Pressable onPress={helper}>
+      <PressableComponent onPressFunction={helper}>
         <View style={Styles.activityView}>
           <Text style={Styles.activityText}> {props.activity} </Text>
           <View style={Styles.dateView2}>
@@ -63,7 +64,7 @@ export default function Activity( props ) {
             <Text style = {Styles.durationAndDateText}>{props.duration + ' mins'}</Text>
           </View>
         </View>
-      </Pressable>
+      </PressableComponent>
     )
 
   }

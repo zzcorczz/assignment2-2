@@ -17,6 +17,7 @@ import { useUpdateHook, useContextHook } from '../Components/ActivitiesList';
 import { writeToDB } from '../firebase-files/firebaseHelper';
 import { database } from '../firebase-files/firebaseSetup';
 import { addDoc, collection } from 'firebase/firestore';
+import PressableComponent from '../Components/PressableComponent';
 
 
 
@@ -111,14 +112,12 @@ export default function AddAnActivity( { navigation, route } ) {
         setText={setText}
       />
       <View style={Styles.cancelSaveView}>
-        <Text
-          style={Styles.cancelTextStyle}
-          onPress={cancelHandler}
-        >Cancel</Text>
-        <Text
-          onPress={confirmHandler}
-          style={Styles.confirmStyle}
-        >Save</Text>
+        <PressableComponent onPressFunction={cancelHandler} customStyle={Styles.cancelButtonStyle}>
+          <Text style={Styles.cancelTextStyle}>Cancel</Text>
+        </PressableComponent>
+        <PressableComponent onPressFunction={confirmHandler} customStyle={Styles.confirmButtonStyle}>
+          <Text style={Styles.cancelTextStyle}>Save</Text>
+        </PressableComponent>
       </View>
     </View>
   )

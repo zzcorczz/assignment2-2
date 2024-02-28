@@ -10,11 +10,38 @@
     
     
     export const Styles = StyleSheet.create({
-      checkBoxView: {
+
+      SpecialActivityTextStyle: {
         width: 300,
-        height: 300,
+        height: 60,
+        color: '#373675',
+        fontWeight: 'bold',
+      },
+      cancelButtonStyle: {
+        width: 130,
+        height: 30,
+        backgroundColor: '#98105b', 
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+      },
+      confirmButtonStyle: {
+        width: 130,
+        height: 30,
+        backgroundColor: '#373675', 
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+        marginLeft: 20,
+      },
+
+      checkBoxView: {
+        width: 330,
+        height: 50,
         flexDirection: 'row',
-        marginTop: 30,
+        marginTop: 200,
       },
       pressed: {
         opacity:0.5,
@@ -104,13 +131,13 @@
         marginRight: 100,
       },
       cancelTextStyle: {
-        fontSize: 20,
-        color: 'red',
+        fontSize: 15,
+        color: 'white',
       },
       cancelSaveView: {
         flexDirection:'row',
         width: '50%',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center',
         alignSelf: 'center',
@@ -119,11 +146,10 @@
       cancelSaveWithCheckBoxView: {
         flexDirection:'row',
         width: '50%',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center',
         alignSelf: 'center',
-        marginTop: -150,
       },
       confirmStyle: {
         fontSize: 20,

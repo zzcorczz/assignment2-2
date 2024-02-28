@@ -10,9 +10,10 @@ import React, { useEffect, useState } from 'react';
 import { Styles } from '../Components/Styles';
 import Activity from '../Components/Activity';
 import { useContextHook } from '../Components/ActivitiesList';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import { database } from '../firebase-files/firebaseSetup';
 import { collection, onSnapshot, QuerySnapshot } from 'firebase/firestore';
+import PressableComponent from '../Components/PressableComponent';
 
 export default function AllActivities( {navigation} ) {
 
@@ -53,10 +54,9 @@ export default function AllActivities( {navigation} ) {
   useEffect(() => navigation.setOptions(
     {
       headerRight: () => (
-        <Button
-          title='Add'
-          onPress={addHandler}
-        />
+        <PressableComponent onPressFunction={addHandler}>
+          <Ionicons name="add" size={24} color="white" />
+        </PressableComponent>
       ),
       headerTitleStyle: {
         color: 'white',
@@ -67,7 +67,6 @@ export default function AllActivities( {navigation} ) {
       tabBarStyle: {
         backgroundColor: '#363776'
       },
-      
     },
 
     ) 
@@ -102,9 +101,7 @@ export default function AllActivities( {navigation} ) {
                   importance = {item.importance}
                   navigationHelper = {navigationHelper}
                 />
-              )
-            }
-            }
+              )}}
           }
           ItemSeparatorComponent={saperator}
         />

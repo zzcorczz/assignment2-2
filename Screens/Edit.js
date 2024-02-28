@@ -76,7 +76,6 @@ export default function Edit( { navigation, route } ) {
   }
 
   const data = route.params;
-  console.log(data);
   const id = data.id;
   const [open, setOpen] = useState(false);
   const [duration, setDuration] = useState(data.duration.toString());
@@ -99,7 +98,6 @@ export default function Edit( { navigation, route } ) {
   useEffect(() => {
     function determineStatus(){
       let status = false;
-      console.log(value);
       if (judgeSpecial(value, duration, importance) === true) {
         status = true;
         setStatus(status);
@@ -172,9 +170,9 @@ export default function Edit( { navigation, route } ) {
       )
     }
   }
-  console.log(importance);
+  
   let component;
-  //console.log(status);
+
   if (status === true) {
     
     component = (
@@ -206,25 +204,22 @@ export default function Edit( { navigation, route } ) {
             setText={setText}
           />
           <View style={Styles.checkBoxView}>
-            <Text>
+            <Text style={Styles.SpecialActivityTextStyle}>
               This item is marked as special. 
               Select the checkbox if you would like to approve it.
-            </Text>
+            </Text> 
             <Checkbox
               value={importance}
               onValueChange={setImportance}
             />
-            
           </View>
           <View style={Styles.cancelSaveWithCheckBoxView}>
-            <Text
-              style={Styles.cancelTextStyle}
-              onPress={cancelHandler}
-            >Cancel</Text>
-            <Text
-              onPress={confirmHandler}
-              style={Styles.confirmStyle}
-            >Save</Text>
+            <PressableComponent onPressFunction={cancelHandler} customStyle={Styles.cancelButtonStyle}>
+                  <Text style={Styles.cancelTextStyle}>Cancel</Text>
+              </PressableComponent>
+              <PressableComponent onPressFunction={confirmHandler} customStyle={Styles.confirmButtonStyle}>
+                  <Text style={Styles.cancelTextStyle}>Save</Text>
+              </PressableComponent>
           </View>
         </View>
       
@@ -262,14 +257,12 @@ export default function Edit( { navigation, route } ) {
             setText={setText}
           />
           <View style={Styles.cancelSaveView}>
-            <Text
-              style={Styles.cancelTextStyle}
-              onPress={cancelHandler}
-            >Cancel</Text>
-            <Text
-              onPress={confirmHandler}
-              style={Styles.confirmStyle}
-            >Save</Text>
+            <PressableComponent onPressFunction={cancelHandler} customStyle={Styles.cancelButtonStyle}>
+                <Text style={Styles.cancelTextStyle}>Cancel</Text>
+            </PressableComponent>
+            <PressableComponent onPressFunction={confirmHandler} customStyle={Styles.confirmButtonStyle}>
+                <Text style={Styles.cancelTextStyle}>Save</Text>
+            </PressableComponent>
           </View>
         </View>
       )

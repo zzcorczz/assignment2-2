@@ -13,6 +13,9 @@ import Activity from '../Components/Activity'
 import { useContextHook } from '../Components/ActivitiesList'
 import { collection, onSnapshot } from 'firebase/firestore'
 import { database } from '../firebase-files/firebaseSetup'
+import PressableComponent from '../Components/PressableComponent'
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+
 
 export default function SpecialActivities({navigation}) {
   
@@ -59,10 +62,9 @@ export default function SpecialActivities({navigation}) {
   
   useEffect(() => navigation.setOptions(
     {headerRight: () => (
-        <Button
-          title='Add'
-          onPress={addHandler}
-        />
+      <PressableComponent onPressFunction={addHandler}>
+        <Ionicons name="add" size={24} color="white" />
+      </PressableComponent>
       ),
       headerTitleStyle: {
         color: 'white',
