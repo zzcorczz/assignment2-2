@@ -101,6 +101,9 @@ export default function AddAnActivity( { navigation, route } ) {
             width: 300,
           }
         }
+        textStyle={
+          {color: '#12126a'}
+        }
       />
       <TextBox
         intro={'Duration (min) *'}

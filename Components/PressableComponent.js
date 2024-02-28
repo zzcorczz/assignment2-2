@@ -6,11 +6,13 @@ export default function PressableComponent( {
   children, 
   onPressFunction,
   customStyle,
+  disabled = false,
 })
 {
   return (
     <View>
       <Pressable 
+      disabled={disabled}
       onPress={onPressFunction}
       style={({pressed}) => [
           customStyle,

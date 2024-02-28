@@ -193,6 +193,9 @@ export default function Edit( { navigation, route } ) {
                 width: 300,
               }
             }
+            textStyle={
+              {color: '#12126a'}
+            }
           />
           <TextBox
             intro={'Duration (min) *'}
@@ -245,6 +248,9 @@ export default function Edit( { navigation, route } ) {
               {
                 width: 300,
               }
+            }
+            textStyle={
+              {color: '#12126a'}
             }
           />
           <TextBox

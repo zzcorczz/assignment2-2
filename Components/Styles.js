@@ -11,6 +11,17 @@
     
     export const Styles = StyleSheet.create({
 
+      disabledButtonStyle: {
+        width: 130,
+        height: 30,
+        backgroundColor: 'grey', 
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+        marginLeft: 20,
+      },
+
       SpecialActivityTextStyle: {
         width: 300,
         height: 60,
@@ -71,8 +82,11 @@
         backgroundColor: '#b2b2d5',
         borderRadius: 5,
         width: 300,
+        height: 30,
         borderColor: '#3d3d78',
         borderWidth: 1,
+        paddingLeft: 5,
+        color: '#12126a',
       },
       startFont: {
         fontSize: 15,
@@ -126,9 +140,8 @@
         marginTop: 20,
       },
       resetStyle: {
-        fontSize: 20,
-        color: 'red',
-        marginRight: 100,
+        fontSize: 15,
+        color: 'white',
       },
       cancelTextStyle: {
         fontSize: 15,

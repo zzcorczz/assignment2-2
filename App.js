@@ -101,7 +101,6 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <ContextProvider>
         <stack.Navigator>
           <stack.Screen 
             options={Styles.screenStyles}
@@ -124,7 +123,6 @@ export default function App() {
             component={Edit}
           />
         </stack.Navigator>
-      </ContextProvider>
     </NavigationContainer>
   );
 };

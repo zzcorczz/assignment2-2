@@ -8,9 +8,10 @@ Purpose:
 
 
 import { View, Text, SafeAreaView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TextBox from '../Components/TextBox';
 import { Styles } from '../Components/Styles';
+import PressableComponent from '../Components/PressableComponent';
 
 export default function Start( {navigation} ) {
 
@@ -19,7 +20,7 @@ export default function Start( {navigation} ) {
   const [emailAlert, setEmailAlert] = useState(false);
   const [phoneAlert, setPhoneAlert] = useState(false);
   const [confirm, setConfirm] = useState(false);
-
+  const [disabled, setDisabled] = useState(true);
 
   function nameHanlder(text) {
     setEmail(text);
@@ -72,6 +73,7 @@ export default function Start( {navigation} ) {
   }
 
   function buttonHanlder() {
+
     if (emailTest(email) === true) {
       setEmailAlert(false);
     }
@@ -84,6 +86,7 @@ export default function Start( {navigation} ) {
     if (phoneChecker(phone) === false) {
       setPhoneAlert(true);
     }
+
     setConfirm(false);
     if (phoneTest(phone) === true && emailTest(email) === true) {
       setConfirm(true);
@@ -93,7 +96,17 @@ export default function Start( {navigation} ) {
     }
   };
 
+  function disabledJudge() {
+    if (email === '' && phone === '') {
+      setDisabled(true);
+    } else {
+      setDisabled(false);
+    }
+  }
 
+  useEffect(() => {
+    disabledJudge();
+  })
 
   return (
     <SafeAreaView style={Styles.container}>
@@ -112,14 +125,18 @@ export default function Start( {navigation} ) {
         alert={'Please Enter a Valid Phone Number'}
       />
       <View style={Styles.resetConfirm}>
-        <Text
-          style={Styles.resetStyle}
-          onPress={resetHandler}
-        >Reset</Text>
-        <Text
-          style={Styles.confirmStyle}
-          onPress = {buttonHanlder}
-        >Confirm</Text>
+        <PressableComponent onPressFunction={resetHandler} customStyle={Styles.cancelButtonStyle}>
+          <Text style={Styles.resetStyle}>Reset</Text>
+        </PressableComponent>
+        {disabled ? (
+        <PressableComponent onPressFunction={buttonHanlder} customStyle={Styles.disabledButtonStyle} disabled={disabled}>
+          <Text style={Styles.resetStyle}>Confirm</Text>
+        </PressableComponent>
+        ) : (
+        <PressableComponent onPressFunction={buttonHanlder} customStyle={Styles.confirmButtonStyle}>
+          <Text style={Styles.resetStyle}>Confirm</Text>
+        </PressableComponent>
+        )}
       </View>
     </SafeAreaView>
   )
