@@ -71,7 +71,7 @@ export default function AllActivities( {navigation} ) {
     },
 
     ) 
-  )
+  );
 
   function saperator() {
     return (

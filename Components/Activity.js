@@ -14,7 +14,7 @@ import { FontAwesome } from '@expo/vector-icons';
 export default function Activity( props ) {
 
   function judgeSpecial() {
-    if ((props.activity === 'Running' || props.activity === 'Weights') && parseInt(props.duration) >= 60)
+    if ((props.activity === 'Running' || props.activity === 'Weights') && parseInt(props.duration) >= 60 && props.importance === true)
     {
       return true;
     }

@@ -9,48 +9,77 @@ Purpose:
 */
 
 
-import { View, Text, Button} from 'react-native';
+
+import { View, Text, Button, Alert} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Styles } from '../Components/Styles';
 import TextBox from '../Components/TextBox';
 import DatePicker from '../Components/DatePicker';
 import { useUpdateHook, useContextHook } from '../Components/ActivitiesList';
-import { getData, writeToDB } from '../firebase-files/firebaseHelper';
+import { deleteData, getData, writeToDB } from '../firebase-files/firebaseHelper';
 import { database } from '../firebase-files/firebaseSetup';
 import { addDoc, collection, doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import Checkbox from 'expo-checkbox';
+import PressableComponent from '../Components/PressableComponent';
+import { FontAwesome } from '@expo/vector-icons';
+
 
 
 
 export default function Edit( { navigation, route } ) {
 
+
+  function deleteHanlder() {
+    Alert.alert(
+      'Delete',
+      'Are you sure you wish to delete this item?',
+      [
+        {
+          text: 'No',
+          onPress: ()=> {}
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            deleteData(data.id);
+            navigation.goBack();
+          }
+        }
+      ]
+    )
+  }
   //updateArray = useUpdateHook();  
+  useEffect(() => navigation.setOptions(
+    {
+      headerRight: () => (
+        <PressableComponent onPressFunction={deleteHanlder}>
+          <View>
+            <FontAwesome name="trash" size={24} color="white" />
+          </View>
+        </PressableComponent>
+      ),
+    },
+    ) 
+  );
+
+  
+  function judgeSpecial(activity, duration, importance) {
+
+    if ((activity === 'Running' || activity === 'Weights') && parseInt(duration) >= 60 && importance === true)
+    {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
   const data = route.params;
   console.log(data);
-  //console.log(data.id);
   const id = data.id;
-
-  /*
-  useEffect(() => {
-    async function getData() {
-      const docRef = doc(database, 'activities', id);
-      try {
-        const document = await getDoc(docRef);
-        setDoc(document.data())
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getData();
-  }, []);
-  
-
-  console.log(document.activity);
-  */
   const [open, setOpen] = useState(false);
   const [duration, setDuration] = useState(data.duration.toString());
-  console.log(data.activity);
   const [value, setValue] = useState(data.activity);
   const [items, setItems] = useState(
     [
@@ -65,6 +94,25 @@ export default function Edit( { navigation, route } ) {
   );
   const [text, setText] = useState(data.date);
   const [importance, setImportance] = useState(data.importance);
+  const [status, setStatus] = useState(false);
+
+  useEffect(() => {
+    function determineStatus(){
+      let status = false;
+      console.log(value);
+      if (judgeSpecial(value, duration, importance) === true) {
+        status = true;
+        setStatus(status);
+      } else {
+        setImportance(true);
+        status = false;
+        setStatus(status);
+      }
+    }
+    determineStatus();
+  }
+    
+  ,[]);
 
   function selectHandler(data) {
     setValue(data.value)
@@ -85,46 +133,37 @@ export default function Edit( { navigation, route } ) {
     });
   };
 
+
+
   function confirmHandler() {
     
     
+    const data = {
+      date: text,
+      time: parseInt(duration),
+      activity: value,
+      importance: importance,
+    };
+
     if (isNaN(parseInt(duration)) === false && parseInt(duration) > 0 && text !== '' && value !== undefined) {
 
-      const data = {
-        date: text,
-        time: parseInt(duration),
-        activity: value,
-        importance: importance,
-      };
-
-      update();
-
-      /*
-
-      async (e) => {
-        await updateDoc(doc(database, 'activities', data.id), {
-          activity: value,
-          importance: importance,
-          date: text,
-          time: parseInt(duration),
-        });
-      }
-      */
-
-
-
-      
-
-      /*
-      updateArray(
-        {
-          date: text,
-          time: parseInt(duration),
-          activity: value
-        } 
+      Alert.alert(
+        'Important',
+        'Are you sure you wish to save these changes?',
+        [
+          {
+            text: 'No',
+            onPress: ()=> {}
+          },
+          {
+            text: 'Yes',
+            onPress: () => {
+              update();
+              navigation.goBack();
+            }
+          }
+        ]
       )
-      */
-      navigation.goBack();
     }
     
     else {
@@ -133,45 +172,111 @@ export default function Edit( { navigation, route } ) {
       )
     }
   }
-
-  return (
-
-    <View style={Styles.containerAdd}>
+  console.log(importance);
+  let component;
+  //console.log(status);
+  if (status === true) {
+    
+    component = (
       
-      <DropDownPicker
-        defaultValue={value}
-        open={open}
-        value={value}
-        items={items}
-        setValue={setValue}
-        setItems={setItems}
-        onPress={setOpen}
-        onSelectItem={selectHandler}
-        containerStyle={
-          {
-            width: 300,
-          }
-        }
-      />
-      <TextBox
-        intro={'Duration (min) *'}
-        onChangeText={setDuration}
-        text={duration}
-      />
-      <DatePicker
-        text={text}
-        setText={setText}
-      />
-      <View style={Styles.cancelSaveView}>
-        <Text
-          style={Styles.cancelTextStyle}
-          onPress={cancelHandler}
-        >Cancel</Text>
-        <Text
-          onPress={confirmHandler}
-          style={Styles.confirmStyle}
-        >Save</Text>
-      </View>
-    </View>
-  )
+        <View style={Styles.containerAdd}>
+          
+          <DropDownPicker
+            defaultValue={value}
+            open={open}
+            value={value}
+            items={items}
+            setValue={setValue}
+            setItems={setItems}
+            onPress={setOpen}
+            onSelectItem={selectHandler}
+            containerStyle={
+              {
+                width: 300,
+              }
+            }
+          />
+          <TextBox
+            intro={'Duration (min) *'}
+            onChangeText={setDuration}
+            text={duration}
+          />
+          <DatePicker
+            text={text}
+            setText={setText}
+          />
+          <View style={Styles.checkBoxView}>
+            <Text>
+              This item is marked as special. 
+              Select the checkbox if you would like to approve it.
+            </Text>
+            <Checkbox
+              value={importance}
+              onValueChange={setImportance}
+            />
+            
+          </View>
+          <View style={Styles.cancelSaveWithCheckBoxView}>
+            <Text
+              style={Styles.cancelTextStyle}
+              onPress={cancelHandler}
+            >Cancel</Text>
+            <Text
+              onPress={confirmHandler}
+              style={Styles.confirmStyle}
+            >Save</Text>
+          </View>
+        </View>
+      
+    );
+  } else {
+
+
+    component = (
+      
+      (
+        <View style={Styles.containerAdd}>
+          
+          <DropDownPicker
+            defaultValue={value}
+            open={open}
+            value={value}
+            items={items}
+            setValue={setValue}
+            setItems={setItems}
+            onPress={setOpen}
+            onSelectItem={selectHandler}
+            containerStyle={
+              {
+                width: 300,
+              }
+            }
+          />
+          <TextBox
+            intro={'Duration (min) *'}
+            onChangeText={setDuration}
+            text={duration}
+          />
+          <DatePicker
+            text={text}
+            setText={setText}
+          />
+          <View style={Styles.cancelSaveView}>
+            <Text
+              style={Styles.cancelTextStyle}
+              onPress={cancelHandler}
+            >Cancel</Text>
+            <Text
+              onPress={confirmHandler}
+              style={Styles.confirmStyle}
+            >Save</Text>
+          </View>
+        </View>
+      )
+    )
+  }
+
+  return component;
+
+  
 }

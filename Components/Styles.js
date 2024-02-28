@@ -10,6 +10,15 @@
     
     
     export const Styles = StyleSheet.create({
+      checkBoxView: {
+        width: 300,
+        height: 300,
+        flexDirection: 'row',
+        marginTop: 30,
+      },
+      pressed: {
+        opacity:0.5,
+      },
       image: {
         position: 'absolute', 
         left: 90,
@@ -74,6 +83,16 @@
           color: "#fff"
         },
       },
+      editScreen: {
+        title:'Edit',
+        headerStyle: {
+          backgroundColor: "#363776"
+        },
+        headerTitleStyle: {
+          fontWeight: "bold",
+          color: "#fff"
+        },
+      },
       resetConfirm: {
         flexDirection: 'row',
         alignContent: 'center',
@@ -96,6 +115,15 @@
         alignContent: 'center',
         alignSelf: 'center',
         marginTop: 180,
+      },
+      cancelSaveWithCheckBoxView: {
+        flexDirection:'row',
+        width: '50%',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        alignContent: 'center',
+        alignSelf: 'center',
+        marginTop: -150,
       },
       confirmStyle: {
         fontSize: 20,

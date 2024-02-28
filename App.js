@@ -10,7 +10,7 @@ Purpose:
 
 import { StatusBar } from 'expo-status-bar';
 import { createContext, useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Pressable, Alert } from 'react-native';
 import { NavigationContainer, ThemeProvider } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Start from './Screens/Start';
@@ -22,6 +22,9 @@ import ContextProvider from './Components/ActivitiesList';
 import AddAnActivity from './Screens/AddAnActivity';
 import { FontAwesome } from '@expo/vector-icons';
 import Edit from './Screens/Edit';
+import PressableComponent from './Components/PressableComponent';
+
+
 
 
 
@@ -35,8 +38,7 @@ function TabScreen () {
   return (
     <Tab.Navigator
       screenOptions = {
-        Styles.bottomTab
-        
+        Styles.bottomTab        
       }
     >
       <Tab.Screen
@@ -117,7 +119,7 @@ export default function App() {
             component={AddAnActivity}
           />
           <stack.Screen
-            options={Styles.addScreen}
+            options={Styles.editScreen}
             name='Edit'
             component={Edit}
           />

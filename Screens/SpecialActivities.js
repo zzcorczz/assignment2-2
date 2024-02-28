@@ -30,13 +30,25 @@ export default function SpecialActivities({navigation}) {
       
   }, []);
 
+  function navigationHelper(activity, duration, date, importance, id) {
+    //console.log(activity);
+    data = {
+      activity: activity,
+      duration: duration,
+      date: date,
+      importance: importance,
+      id:id,
+    };
+    navigation.navigate('Edit', data);
+  }
+
   function addHandler() {
     navigation.navigate('Add')
   }
   
   function judgeSpecial(obj) {
     
-    if ((obj.activity === 'Running' || obj.activity === 'Weights') && obj.time >= 60)
+    if ((obj.activity === 'Running' || obj.activity === 'Weights') && obj.time >= 60 && obj.importance === true)
     {
       return true;
     }
@@ -91,6 +103,8 @@ export default function SpecialActivities({navigation}) {
                   date = {item.date}
                   duration = {item.time}
                   id = {item.id}
+                  importance = {item.importance}
+                  navigationHelper = {navigationHelper}
                 />
               )
             }
